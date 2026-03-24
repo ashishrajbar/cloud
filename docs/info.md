@@ -1,3 +1,53 @@
+
+
+Thanks for sharing this — the overall direction of a low-impact transition with dual deployment is a good approach to reduce risk during migration.
+
+I do have a few observations and questions from an architecture and operational standpoint that we should align on before scaling this further:
+
+1. CI/CD Boundary Clarity
+The current approach introduces additional CI pipeline logic (scripts, Java-based control) to manage what is fundamentally a CD concern (ArgoCD-driven state reconciliation).
+
+We should be careful not to couple deployment orchestration into CI, as ArgoCD is designed to operate declaratively from Git as the source of truth. Introducing imperative logic in CI could lead to drift and reduce transparency.
+
+2. Source of Truth vs Control Flow
+While the note mentions Git (values.yaml) as the source of truth, the pipeline is programmatically updating branches and triggering deployments.
+
+It would be good to clarify:
+
+Are we moving toward a fully GitOps-driven model, or
+Maintaining a hybrid CI-triggered deployment model?
+
+This distinction is important for long-term operability and auditability.
+
+3. Dual Deployment Strategy (Rafay + ArgoCD)
+The “dual control / kill switch” approach is useful short-term, but we should define:
+
+Clear ownership of deployment state during transition
+Exit criteria for Rafay to avoid prolonged dual control complexity
+
+4. Deployment Abstraction in Java Layer
+Centralizing deployment logic in Java for propagation across repos is interesting, but it introduces an additional abstraction layer outside native GitOps tooling.
+
+We should evaluate whether this creates tight coupling or reduces visibility for teams operating the platform.
+
+5. Operational Model & Failure Handling
+Since scripts are modifying deployment artifacts and pushing changes:
+
+How are failures handled (partial commits, rollback, drift detection)?
+How does Argo reconcile unexpected states introduced via CI?
+
+6. Environment Promotion Flow
+The note mentions Dev → QA migration sequencing — it would be helpful to confirm if promotions remain Git-driven (PR-based) or pipeline-triggered.
+
+Aligning this early will help standardize patterns across teams.
+
+Overall, the direction makes sense for a controlled transition, but I think we should align on the target-state model (pure GitOps vs hybrid) and ensure current decisions don’t introduce long-term operational complexity.
+
+Happy to walk through this together and help standardize the pattern.
+
+
+****
+
 I want to briefly provide additional insight from yesterday JTAPPS calls, as it is starting to impact both delivery and overall program alignment along with my personal life.
 I understand this is not the best professional letter that I should be giving an MD but I think my emotions are running high and I am not able to understand what is going on in Jefferies anymore.
 During the JTAPPS Daily Scrum. Anish and Shiva both did not act as a SR. VP level individuals. I am not sure if is it their lack of skills or ulterior motives. Consciously I have never been part of any politics ever in my professional career, I have never taken credit for anyone else work.

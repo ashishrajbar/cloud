@@ -1,4 +1,37 @@
+Architecture should remain a unified function across application and platform, rather than being embedded within delivery roles, to avoid fragmentation and ensure consistency in design decisions, integration patterns, and resiliency strategy.
+Proposed Structure,
+1. Ops Tech Architecture 
+Purpose: Own end-to-end architecture across Ops Tech
+Accountable for:
+•	Target architecture and evolution roadmap
+•	Integration patterns (Kafka, Redis, Snowflake, MQ)
+•	Cross-system design decisions
+•	NFR standards (latency, resiliency, RTO/RPO)
+•	Multi-region strategy
+•	Architecture governance and design authority
+•	Cloud service patterns
+•	DevOps / CI-CD standards
+•	Observability framework
 
+2. Application Architecture
+
+Purpose: Own application-level design within domain boundaries
+Responsible for:
+•	Service design and boundaries 
+•	API contracts 
+•	Domain modeling (DDD) 
+•	Implementation alignment to architecture standards
+
+3. Dev Leads
+
+Purpose: Execute delivery
+Responsible for:
+•	Implementation 
+•	Code quality 
+•	Execution
+
+
+*****
 
 Thanks for sharing this — the overall direction of a low-impact transition with dual deployment is a good approach to reduce risk during migration.
 

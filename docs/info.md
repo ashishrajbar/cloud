@@ -78,6 +78,52 @@ Overall, the direction makes sense for a controlled transition, but I think we s
 
 Happy to walk through this together and help standardize the pattern.
 
+*******
+I wanted to share a quick status update on the Redis and Reference Data / Accounts Moniker implementation so we have a common view of what has been completed, what is currently in progress, and what still needs alignment.
+
+Completed:
+
+Redis Platform / Environment Setup
+
+Redis Cloud platform, including the data plane, has been implemented and configured in non-prod environments.
+Jefferies SSO has been integrated with the Redis Cloud control plane for DEV, UAT, and PRD.
+The Operations Support team has been enabled on the Redis Cloud support model.
+
+Redis Implementation / Validation
+
+Redis implementation approach has been defined, and initial validation has been completed with the team.
+Initial Redis performance testing has been carried out to validate latency and throughput behavior.
+Redis Data Integration has been implemented for syncing data from on-prem database servers.
+
+Reference Data / Accounts Moniker
+
+Data pipeline has been configured for syncing data from GCO/JCAP DB to Redis Cloud in DEV.
+Accounts and Moniker master data pipelines have been configured in DEV, and data is currently syncing for both.
+Initial design areas have been identified around preload/refresh strategy, integration pattern, application consumption, and production-like performance assumptions.
+Application-side consumption pattern has been built to validate Redis caching strategy and Accounts/Moniker retrieval.
+Demo code for Redis caching strategy, including write-through vs. lazy loading and retrieval of Accounts/Moniker data, has been uploaded to the JTAPPS Bitbucket repo.
+
+In Progress:
+
+Reference Data transformation on Redis, including data structure, access pattern, and application consumption considerations.
+Validation of final volume, concurrency, and latency assumptions for production-like testing.
+Confirmation of the exact Reference Data needs for JTAPPS, including additional tables such as StaticValue, which we discussed today and which is used to derive BPSClientId.
+
+Next Steps:
+
+Document the Reference Data / Accounts Moniker design, open gaps, and closure plan.
+Consolidate the Redis performance test setup, results, assumptions, and any additional validation needed.
+Walk Bijal through the current Redis test setup, results, and assumptions so we can agree on any additional validation required and avoid duplicate effort.
+
+Please let me know if I missed anything or if there are any additional gaps you want me to capture in the closure plan.
+Completed:
+
+Jefferies Support team enablement completed for Redis Observability, including alignment with the available OTel platform for Grafana/JEM integration.
+Redis Cloud supporting tools and applications have been enabled and configured for VDI access by working with Jefferies Security, DevOps, and Platform Engineering teams.
+
+In Progress:
+
+Redis Cloud integration with the JEM platform is in progress for Grafana dashboard creation and observability enablement.
 
 ****
 
